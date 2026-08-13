@@ -1,0 +1,37 @@
+project_id = "nvyjihhayzqhntihqgae"
+
+[functions.ai-diagnostics]
+verify_jwt = false
+
+[functions.patient-summary]
+verify_jwt = false
+
+[functions.export-to-sheets]
+verify_jwt = false
+
+[functions.record-summary]
+verify_jwt = false
+
+[functions.risk-assessment]
+verify_jwt = false
+
+[functions.ai-analytics]
+verify_jwt = false
+
+[functions.health-insights]
+verify_jwt = false
+
+[functions.population-health]
+verify_jwt = false
+
+[functions.cloud-backup]
+verify_jwt = false
+
+[functions.predictive-alerts]
+verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.seed-demo-patient]
+verify_jwt = false

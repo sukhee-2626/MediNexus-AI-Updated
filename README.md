@@ -1,73 +1,130 @@
-# Welcome to your Lovable project
+# 🏥 MediNexus AI (formerly MediChain)
 
-## Project info
+> **Next-Generation Healthcare Management, AI Diagnostics & Patient Care Ecosystem**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+MediNexus AI is an enterprise-grade, intelligent healthcare platform designed to bridge the gap between patient care, hospital management, AI-driven diagnostics, and seamless data access. Built with modern web technologies, real-time database capabilities, and AI intelligence, MediNexus AI simplifies appointment scheduling, patient records management, clinical insights, and patient-doctor collaboration.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## ✨ Key Features
 
-**Use Lovable**
+### 👨‍⚕️ Provider & Hospital Management
+- **Smart Patient Dashboard**: Real-time patient overview, search, filtering, risk indicators, and recent health activity.
+- **AI Diagnostics & Analytics**: Automated patient summaries, risk assessment scoring, and predictive health alerts powered by Gemini AI.
+- **Smart Appointment Management**: Seamless appointment requests, status tracking (Pending, Scheduled, Completed, Cancelled), and doctor availability scheduling.
+- **Audit Logs & Security**: Comprehensive activity logs for compliance audit trails and consent management.
+- **Data Export & Reporting**: Export patient data and hospital records securely to CSV/Excel format.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 👤 Patient Portal
+- **Interactive Patient Portal**: Unified access for patients to view medical records, prescription details, and health timelines.
+- **AI Health Assistant & Chatbot**: Instant AI-powered assistance for general health inquiries, symptom guidance, and appointment queries.
+- **Consent Management**: Direct patient control over data sharing permissions with healthcare providers.
+- **Prescription Refills & Requests**: Simplified online prescription refill requests and appointment scheduling.
+- **Personalized Health Alerts**: Real-time notifications for upcoming appointments, medication schedules, and health warnings.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🤖 AI Engine & Edge Intelligence
+- **Intelligent Patient Record Summarization**: Summarizes lengthy medical histories into actionable clinical highlights.
+- **Predictive Risk Assessment**: Categorizes health risk levels (Low, Moderate, High) with recommendation vectors.
+- **Multi-modal Diagnostics**: Integrates modern AI capabilities for automated medical insights.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Technology Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Frontend Core**: [React 18](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/)
+- **Styling & UI**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) + [Lucide Icons](https://lucide.dev/)
+- **State & Data Fetching**: [TanStack Query (React Query)](https://tanstack.com/query)
+- **Backend & Database**: [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security, Real-time Subscriptions, Edge Functions)
+- **AI Capabilities**: Google Gemini API & Supabase Edge Functions
+- **Data Visualization**: [Recharts](https://recharts.org/)
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 📁 Repository Structure
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+medichain-spark-main/
+├── public/                 # Static assets & branding icons
+├── src/
+│   ├── assets/             # Images and illustration assets
+│   ├── components/         # Reusable UI & section components
+│   │   ├── dashboard/      # Hospital / Doctor dashboard modules
+│   │   ├── patient/        # Patient portal components & AI chatbot
+│   │   └── ui/             # Radix UI / shadcn component primitives
+│   ├── hooks/              # Custom React hooks (Auth, Toast, Mobile)
+│   ├── integrations/       # Supabase client integration & types
+│   ├── lib/                # Utilities and Gemini AI client helpers
+│   ├── pages/              # Main route views (Dashboard, PatientPortal, Auth, etc.)
+│   └── main.tsx            # Application entry point
+├── supabase/               # Migrations, Edge Functions & database setup
+├── tailwind.config.ts      # Tailwind styling configuration
+├── vite.config.ts          # Vite build & plugin configuration
+└── package.json            # Dependencies & build scripts
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🚀 Getting Started
 
-**Use GitHub Codespaces**
+### Prerequisites
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Node.js**: v18.0.0 or higher
+- **npm**: v9.0.0 or higher (or `bun` / `yarn`)
 
-## What technologies are used for this project?
+### Installation
 
-This project is built with:
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/sukhee-2626/MediNexus-AI-Updated.git
+   cd MediNexus-AI-Updated
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-## How can I deploy this project?
+3. **Configure Environment Variables**
+   Create a `.env` file in the root directory (refer to `.env.example`):
+   ```env
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_GEMINI_API_KEY=your_gemini_api_key
+   ```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+4. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open your browser and navigate to `http://localhost:8080` (or `http://localhost:5173`).
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## 📦 Build & Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+To generate a production bundle:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+---
+
+## 🔐 Security & Data Privacy
+
+MediNexus AI follows strict security standards:
+- **Row Level Security (RLS)**: Enforced via Supabase PostgreSQL policies.
+- **Granular Consent Controls**: Patients grant or revoke medical record access dynamically.
+- **Encrypted Transits**: All communication is secured via TLS/SSL.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

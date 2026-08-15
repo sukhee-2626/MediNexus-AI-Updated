@@ -29,7 +29,9 @@ import {
   QrCode,
   MapPin,
   Video,
-  Stethoscope
+  Stethoscope,
+  Pill,
+  CreditCard
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 import { AppointmentRequestForm } from "@/components/patient/AppointmentRequestForm";
@@ -37,6 +39,10 @@ import { RefillRequestForm } from "@/components/patient/RefillRequestForm";
 import { MessagesPanel } from "@/components/patient/MessagesPanel";
 import { HealthAlertsCard } from "@/components/patient/HealthAlertsCard";
 import { AIChatbot } from "@/components/patient/AIChatbot";
+import { EmergencyHealthPass } from "@/components/patient/EmergencyHealthPass";
+import { VitalsTrackerCard } from "@/components/patient/VitalsTrackerCard";
+import { MedicationTrackerCard } from "@/components/patient/MedicationTrackerCard";
+import { InsuranceClaimsCard } from "@/components/patient/InsuranceClaimsCard";
 
 type Patient = Tables<"patients">;
 type MedicalRecord = Tables<"medical_records">;
@@ -275,60 +281,74 @@ const PatientPortal = () => {
             </CardContent>
           </Card>
 
-          {/* Patient Info Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Your Portable Health Profile
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Age</p>
-                  <p className="font-medium">{calculateAge(patient.date_of_birth)} years</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Gender</p>
-                  <p className="font-medium">{patient.gender || "Not specified"}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Blood Type</p>
-                  <p className="font-medium">{patient.blood_type || "Not specified"}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium">{patient.phone || "Not provided"}</p>
-                </div>
-              </div>
-              
-              {(patient.allergies?.length > 0 || patient.chronic_conditions?.length > 0) && (
-                <div className="grid gap-4 md:grid-cols-2 mt-6">
-                  {patient.allergies && patient.allergies.length > 0 && (
+          {/* Profile & Digital Health Passport Grid */}
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <User className="h-5 w-5" />
+                    Your Portable Health Profile
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
                     <div>
-                      <p className="text-sm text-muted-foreground mb-2">Allergies</p>
-                      <div className="flex flex-wrap gap-2">
-                        {patient.allergies.map((allergy, i) => (
-                          <Badge key={i} variant="destructive">{allergy}</Badge>
-                        ))}
-                      </div>
+                      <p className="text-sm text-muted-foreground">Age</p>
+                      <p className="font-medium">{calculateAge(patient.date_of_birth)} years</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Gender</p>
+                      <p className="font-medium">{patient.gender || "Not specified"}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Blood Type</p>
+                      <p className="font-medium">{patient.blood_type || "Not specified"}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Phone</p>
+                      <p className="font-medium">{patient.phone || "Not provided"}</p>
+                    </div>
+                  </div>
+                  
+                  {(patient.allergies?.length > 0 || patient.chronic_conditions?.length > 0) && (
+                    <div className="grid gap-4 md:grid-cols-2 mt-6">
+                      {patient.allergies && patient.allergies.length > 0 && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-2">Allergies</p>
+                          <div className="flex flex-wrap gap-2">
+                            {patient.allergies.map((allergy, i) => (
+                              <Badge key={i} variant="destructive">{allergy}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {patient.chronic_conditions && patient.chronic_conditions.length > 0 && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-2">Chronic Conditions</p>
+                          <div className="flex flex-wrap gap-2">
+                            {patient.chronic_conditions.map((condition, i) => (
+                              <Badge key={i} variant="secondary">{condition}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
-                  {patient.chronic_conditions && patient.chronic_conditions.length > 0 && (
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">Chronic Conditions</p>
-                      <div className="flex flex-wrap gap-2">
-                        {patient.chronic_conditions.map((condition, i) => (
-                          <Badge key={i} variant="secondary">{condition}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
+              <EmergencyHealthPass patient={patient} />
+            </div>
+          </div>
+
+          {/* Live Vitals & Pill Schedule Interactive Section */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <VitalsTrackerCard />
+            <MedicationTrackerCard />
+          </div>
 
           {/* Quick Actions */}
           <div className="flex flex-wrap gap-3">
@@ -345,29 +365,52 @@ const PatientPortal = () => {
           {/* Health Alerts */}
           <HealthAlertsCard patientId={patient.id} />
 
-          <Tabs defaultValue="history">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="history" className="flex items-center gap-2">
-                <Activity className="h-4 w-4" />
+          <Tabs defaultValue="vitals">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 h-auto p-1 gap-1">
+              <TabsTrigger value="vitals" className="flex items-center gap-1.5 text-xs py-2">
+                <Activity className="h-3.5 w-3.5" />
+                Vitals
+              </TabsTrigger>
+              <TabsTrigger value="pills" className="flex items-center gap-1.5 text-xs py-2">
+                <Pill className="h-3.5 w-3.5" />
+                Pills
+              </TabsTrigger>
+              <TabsTrigger value="history" className="flex items-center gap-1.5 text-xs py-2">
+                <Activity className="h-3.5 w-3.5" />
                 History
               </TabsTrigger>
-              <TabsTrigger value="prescriptions" className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
+              <TabsTrigger value="prescriptions" className="flex items-center gap-1.5 text-xs py-2">
+                <FileText className="h-3.5 w-3.5" />
                 Prescriptions
               </TabsTrigger>
-              <TabsTrigger value="messages" className="flex items-center gap-2">
-                <MessageSquare className="h-4 w-4" />
+              <TabsTrigger value="insurance" className="flex items-center gap-1.5 text-xs py-2">
+                <CreditCard className="h-3.5 w-3.5" />
+                Insurance
+              </TabsTrigger>
+              <TabsTrigger value="messages" className="flex items-center gap-1.5 text-xs py-2">
+                <MessageSquare className="h-3.5 w-3.5" />
                 Messages
               </TabsTrigger>
-              <TabsTrigger value="consents" className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Consents
-              </TabsTrigger>
-              <TabsTrigger value="ai" className="flex items-center gap-2">
-                <Bot className="h-4 w-4" />
-                AI Assistant
+              <TabsTrigger value="ai" className="flex items-center gap-1.5 text-xs py-2">
+                <Bot className="h-3.5 w-3.5" />
+                AI Doctor
               </TabsTrigger>
             </TabsList>
+
+            {/* Vitals Tab */}
+            <TabsContent value="vitals" className="space-y-4 pt-2">
+              <VitalsTrackerCard />
+            </TabsContent>
+
+            {/* Pills Tab */}
+            <TabsContent value="pills" className="space-y-4 pt-2">
+              <MedicationTrackerCard />
+            </TabsContent>
+
+            {/* Insurance Tab */}
+            <TabsContent value="insurance" className="space-y-4 pt-2">
+              <InsuranceClaimsCard />
+            </TabsContent>
 
             {/* Medical History Tab */}
             <TabsContent value="history" className="space-y-4">

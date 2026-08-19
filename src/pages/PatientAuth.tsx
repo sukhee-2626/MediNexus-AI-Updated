@@ -106,7 +106,9 @@ const PatientAuth = () => {
           return;
         }
 
-        toast.success("Welcome to the Patient Portal!");
+        // Save logged-in email for live email notifications
+        localStorage.setItem("medinexus_patient_email", email.trim());
+        toast.success(`Logged in as ${email.trim()}. Live email updates active!`);
         navigate("/patient-portal");
       }
     } catch (error) {

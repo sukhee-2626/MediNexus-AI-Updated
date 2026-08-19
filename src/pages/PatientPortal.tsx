@@ -44,14 +44,13 @@ import { EmergencyHealthPass } from "@/components/patient/EmergencyHealthPass";
 import { VitalsTrackerCard } from "@/components/patient/VitalsTrackerCard";
 import { MedicationTrackerCard } from "@/components/patient/MedicationTrackerCard";
 import { InsuranceClaimsCard } from "@/components/patient/InsuranceClaimsCard";
-import { WhatsAppChatbot } from "@/components/patient/WhatsAppChatbot";
 import { TelehealthVideoModal } from "@/components/patient/TelehealthVideoModal";
 import { EmergencyBedTrackerCard } from "@/components/patient/EmergencyBedTrackerCard";
 import { AIDiagnosticsScanModal } from "@/components/patient/AIDiagnosticsScanModal";
 import { QRScannerModal } from "@/components/patient/QRScannerModal";
 import { BloodBankTrackerCard } from "@/components/patient/BloodBankTrackerCard";
 import { PatientBillingPaymentCard } from "@/components/patient/PatientBillingPaymentCard";
-import { StageNotificationDispatcher } from "@/components/patient/StageNotificationDispatcher";
+import { EmailNotificationEngine } from "@/components/patient/EmailNotificationEngine";
 
 type Patient = Tables<"patients">;
 type MedicalRecord = Tables<"medical_records">;
@@ -360,11 +359,8 @@ const PatientPortal = () => {
             <MedicationTrackerCard />
           </div>
 
-          {/* Multi-Stage WhatsApp & Email Notification Dispatcher */}
-          <StageNotificationDispatcher patientEmail="patient.sukhee@gmail.com" patientPhone="919865881000" />
-
-          {/* WhatsApp AI Care Assistant & Demo Module */}
-          <WhatsAppChatbot />
+          {/* Live Backend Email Update Engine */}
+          <EmailNotificationEngine initialEmail={patient.email || ""} />
 
           {/* Quick Actions */}
           <div className="flex flex-wrap items-center gap-3">
@@ -389,11 +385,11 @@ const PatientPortal = () => {
           {/* Health Alerts */}
           <HealthAlertsCard patientId={patient.id} />
 
-          <Tabs defaultValue="whatsapp">
+          <Tabs defaultValue="email_updates">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 h-auto p-1 gap-1">
-              <TabsTrigger value="whatsapp" className="flex items-center gap-1 text-xs py-2 bg-emerald-500/10 text-emerald-600 font-bold">
-                <MessageCircle className="h-3.5 w-3.5" />
-                WhatsApp
+              <TabsTrigger value="email_updates" className="flex items-center gap-1 text-xs py-2 bg-sky-500/10 text-sky-600 font-bold">
+                <Bell className="h-3.5 w-3.5" />
+                Email Alerts
               </TabsTrigger>
               <TabsTrigger value="vitals" className="flex items-center gap-1 text-xs py-2">
                 <Activity className="h-3.5 w-3.5" />
@@ -429,9 +425,9 @@ const PatientPortal = () => {
               </TabsTrigger>
             </TabsList>
 
-            {/* WhatsApp Tab */}
-            <TabsContent value="whatsapp" className="space-y-4 pt-2">
-              <WhatsAppChatbot />
+            {/* Email Updates Tab */}
+            <TabsContent value="email_updates" className="space-y-4 pt-2">
+              <EmailNotificationEngine initialEmail={patient.email || ""} />
             </TabsContent>
 
             {/* Vitals Tab */}

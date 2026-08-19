@@ -45,6 +45,9 @@ import { VitalsTrackerCard } from "@/components/patient/VitalsTrackerCard";
 import { MedicationTrackerCard } from "@/components/patient/MedicationTrackerCard";
 import { InsuranceClaimsCard } from "@/components/patient/InsuranceClaimsCard";
 import { WhatsAppChatbot } from "@/components/patient/WhatsAppChatbot";
+import { TelehealthVideoModal } from "@/components/patient/TelehealthVideoModal";
+import { EmergencyBedTrackerCard } from "@/components/patient/EmergencyBedTrackerCard";
+import { AIDiagnosticsScanModal } from "@/components/patient/AIDiagnosticsScanModal";
 
 type Patient = Tables<"patients">;
 type MedicalRecord = Tables<"medical_records">;
@@ -270,18 +273,19 @@ const PatientPortal = () => {
                     <p className="text-xs text-muted-foreground">Estimated Wait Time: <span className="font-bold text-amber-600">~12 minutes</span></p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <TelehealthVideoModal doctorName="Dr. Arjun Mehta" specialty="Senior Cardiologist" />
                   <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-                    <QrCode className="h-4 w-4" /> QR Check-In Token
-                  </Button>
-                  <Button size="sm" variant="ghost" className="text-xs text-destructive hover:bg-destructive/10">
-                    Cancel Visit
+                    <QrCode className="h-4 w-4" /> QR Token
                   </Button>
                 </div>
               </div>
 
             </CardContent>
           </Card>
+
+          {/* Emergency ICU Bed & Hospital Capacity Tracker */}
+          <EmergencyBedTrackerCard />
 
           {/* Profile & Digital Health Passport Grid */}
           <div className="grid gap-6 lg:grid-cols-3">
@@ -356,7 +360,7 @@ const PatientPortal = () => {
           <WhatsAppChatbot />
 
           {/* Quick Actions */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <AppointmentRequestForm patientId={patient.id} />
             <RefillRequestForm 
               patientId={patient.id} 
@@ -365,6 +369,7 @@ const PatientPortal = () => {
                 .flatMap(r => (r.medications as { name: string; dosage: string }[]) || [])
               }
             />
+            <AIDiagnosticsScanModal />
           </div>
 
           {/* Health Alerts */}

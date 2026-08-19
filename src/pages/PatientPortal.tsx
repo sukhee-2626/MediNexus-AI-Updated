@@ -51,6 +51,7 @@ import { AIDiagnosticsScanModal } from "@/components/patient/AIDiagnosticsScanMo
 import { QRScannerModal } from "@/components/patient/QRScannerModal";
 import { BloodBankTrackerCard } from "@/components/patient/BloodBankTrackerCard";
 import { PatientBillingPaymentCard } from "@/components/patient/PatientBillingPaymentCard";
+import { StageNotificationDispatcher } from "@/components/patient/StageNotificationDispatcher";
 
 type Patient = Tables<"patients">;
 type MedicalRecord = Tables<"medical_records">;
@@ -358,6 +359,9 @@ const PatientPortal = () => {
             <VitalsTrackerCard />
             <MedicationTrackerCard />
           </div>
+
+          {/* Multi-Stage WhatsApp & Email Notification Dispatcher */}
+          <StageNotificationDispatcher patientEmail="patient.sukhee@gmail.com" patientPhone="919865881000" />
 
           {/* WhatsApp AI Care Assistant & Demo Module */}
           <WhatsAppChatbot />

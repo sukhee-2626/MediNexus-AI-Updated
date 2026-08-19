@@ -48,6 +48,9 @@ import { WhatsAppChatbot } from "@/components/patient/WhatsAppChatbot";
 import { TelehealthVideoModal } from "@/components/patient/TelehealthVideoModal";
 import { EmergencyBedTrackerCard } from "@/components/patient/EmergencyBedTrackerCard";
 import { AIDiagnosticsScanModal } from "@/components/patient/AIDiagnosticsScanModal";
+import { QRScannerModal } from "@/components/patient/QRScannerModal";
+import { BloodBankTrackerCard } from "@/components/patient/BloodBankTrackerCard";
+import { PatientBillingPaymentCard } from "@/components/patient/PatientBillingPaymentCard";
 
 type Patient = Tables<"patients">;
 type MedicalRecord = Tables<"medical_records">;
@@ -370,42 +373,53 @@ const PatientPortal = () => {
               }
             />
             <AIDiagnosticsScanModal />
+            <QRScannerModal />
+          </div>
+
+          {/* Blood Bank & Billing Section */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <BloodBankTrackerCard />
+            <PatientBillingPaymentCard />
           </div>
 
           {/* Health Alerts */}
           <HealthAlertsCard patientId={patient.id} />
 
           <Tabs defaultValue="whatsapp">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 h-auto p-1 gap-1">
-              <TabsTrigger value="whatsapp" className="flex items-center gap-1.5 text-xs py-2 bg-emerald-500/10 text-emerald-600 font-bold">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 h-auto p-1 gap-1">
+              <TabsTrigger value="whatsapp" className="flex items-center gap-1 text-xs py-2 bg-emerald-500/10 text-emerald-600 font-bold">
                 <MessageCircle className="h-3.5 w-3.5" />
-                WhatsApp AI
+                WhatsApp
               </TabsTrigger>
-              <TabsTrigger value="vitals" className="flex items-center gap-1.5 text-xs py-2">
+              <TabsTrigger value="vitals" className="flex items-center gap-1 text-xs py-2">
                 <Activity className="h-3.5 w-3.5" />
                 Vitals
               </TabsTrigger>
-              <TabsTrigger value="pills" className="flex items-center gap-1.5 text-xs py-2">
+              <TabsTrigger value="pills" className="flex items-center gap-1 text-xs py-2">
                 <Pill className="h-3.5 w-3.5" />
                 Pills
               </TabsTrigger>
-              <TabsTrigger value="history" className="flex items-center gap-1.5 text-xs py-2">
-                <Activity className="h-3.5 w-3.5" />
+              <TabsTrigger value="billing" className="flex items-center gap-1 text-xs py-2">
+                <CreditCard className="h-3.5 w-3.5 text-indigo-500" />
+                Billing
+              </TabsTrigger>
+              <TabsTrigger value="blood" className="flex items-center gap-1 text-xs py-2">
+                <Activity className="h-3.5 w-3.5 text-rose-500" />
+                Blood Bank
+              </TabsTrigger>
+              <TabsTrigger value="history" className="flex items-center gap-1 text-xs py-2">
+                <FileText className="h-3.5 w-3.5" />
                 History
               </TabsTrigger>
-              <TabsTrigger value="prescriptions" className="flex items-center gap-1.5 text-xs py-2">
-                <FileText className="h-3.5 w-3.5" />
-                Prescriptions
-              </TabsTrigger>
-              <TabsTrigger value="insurance" className="flex items-center gap-1.5 text-xs py-2">
-                <CreditCard className="h-3.5 w-3.5" />
+              <TabsTrigger value="insurance" className="flex items-center gap-1 text-xs py-2">
+                <Shield className="h-3.5 w-3.5" />
                 Insurance
               </TabsTrigger>
-              <TabsTrigger value="messages" className="flex items-center gap-1.5 text-xs py-2">
+              <TabsTrigger value="messages" className="flex items-center gap-1 text-xs py-2">
                 <MessageSquare className="h-3.5 w-3.5" />
                 Messages
               </TabsTrigger>
-              <TabsTrigger value="ai" className="flex items-center gap-1.5 text-xs py-2">
+              <TabsTrigger value="ai" className="flex items-center gap-1 text-xs py-2">
                 <Bot className="h-3.5 w-3.5" />
                 AI Doctor
               </TabsTrigger>
@@ -424,6 +438,16 @@ const PatientPortal = () => {
             {/* Pills Tab */}
             <TabsContent value="pills" className="space-y-4 pt-2">
               <MedicationTrackerCard />
+            </TabsContent>
+
+            {/* Billing Tab */}
+            <TabsContent value="billing" className="space-y-4 pt-2">
+              <PatientBillingPaymentCard />
+            </TabsContent>
+
+            {/* Blood Bank Tab */}
+            <TabsContent value="blood" className="space-y-4 pt-2">
+              <BloodBankTrackerCard />
             </TabsContent>
 
             {/* Insurance Tab */}
